@@ -1,0 +1,26 @@
+{
+  "assessment": [
+    {
+      "question_id": "E1",
+      "status": "Fully Addressed",
+      "confidence": 0.98,
+      "reason": "Net Zero strategy disclosed.",
+      "evidence": [
+        {
+          "fact_id": "fact_001"
+        }
+      ]
+    },
+    {
+      "question_id": "E3",
+      "status": "Partially Addressed",
+      "confidence": 0.92,
+      "reason": "Policy disclosed but no biodiversity assessment found.",
+      "evidence": [
+        {
+          "fact_id": "fact_005"
+        }
+      ]
+    }
+  ]
+}

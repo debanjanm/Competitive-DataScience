@@ -1,0 +1,14 @@
+{
+  "status_points": {
+    "Fully Addressed": 100,
+    "Partially Addressed": 50,
+    "Not Disclosed": 0,
+    "Not Applicable": null
+  },
+  "recommendation_bands": [
+    { "min": 80, "max": 100, "label": "Eligible for Green Finance" },
+    { "min": 60, "max": 79, "label": "Conditionally Eligible" },
+    { "min": 40, "max": 59, "label": "Further Review Required" },
+    { "min": 0, "max": 39, "label": "Not Eligible" }
+  ]
+}

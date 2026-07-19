@@ -1,0 +1,15 @@
+{
+  "company": "ABC Green Infrastructure Ltd.",
+  "documents": {
+    "processed": 2,
+    "pages": 146
+  },
+  "score": {
+    "overall": 69,
+    "environmental": 63,
+    "social": 75,
+    "governance": 90
+  },
+  "assessment": [""],
+  "recommendation": {"": ""}
+}

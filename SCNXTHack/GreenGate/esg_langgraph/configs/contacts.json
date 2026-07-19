@@ -1,0 +1,11 @@
+{
+  "internal_reviewers": [
+    { "role": "ESG Risk Analyst", "team": "ESG Risk" },
+    { "role": "Credit Risk Analyst", "team": "Credit Risk" },
+    { "role": "Green Finance Officer", "team": "Green Finance" }
+  ],
+  "escalation": {
+    "team": "Credit Committee",
+    "trigger": "overall_score_below_60"
+  }
+}

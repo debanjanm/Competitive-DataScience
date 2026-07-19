@@ -1,0 +1,18 @@
+{
+  "questions": [
+    { "id": "E1", "category": "environmental", "question": "Does the company disclose a climate strategy aligned with recognized frameworks?", "weight": 15, "expected_evidence": "Climate strategy, TCFD/ISSB references" },
+    { "id": "E2", "category": "environmental", "question": "Has the company published a Net Zero or emissions reduction target?", "weight": 10, "expected_evidence": "Net Zero roadmap, emissions targets" },
+    { "id": "E3", "category": "environmental", "question": "Has the company conducted a biodiversity impact/dependency assessment?", "weight": 10, "expected_evidence": "TNFD/LEAP study, biodiversity assessment" },
+    { "id": "E4", "category": "environmental", "question": "Does the company disclose physical climate risks (flood, heat, cyclone, etc.)?", "weight": 10, "expected_evidence": "Physical risk assessment, hazard analysis" },
+    { "id": "E5", "category": "environmental", "question": "Does the company disclose climate adaptation measures?", "weight": 5, "expected_evidence": "Flood resilient design, relocation, adaptation plan" },
+
+    { "id": "S1", "category": "social", "question": "Does the company publish worker health & safety metrics?", "weight": 10, "expected_evidence": "LTIFR, safety KPIs, training" },
+    { "id": "S2", "category": "social", "question": "Does the company disclose community engagement initiatives?", "weight": 5, "expected_evidence": "CSR, local engagement" },
+    { "id": "S3", "category": "social", "question": "Does the company publish employee diversity or inclusion metrics?", "weight": 5, "expected_evidence": "Diversity statistics, inclusion policy" },
+
+    { "id": "G1", "category": "governance", "question": "Does the board provide oversight of ESG matters?", "weight": 10, "expected_evidence": "ESG Committee, Board Charter" },
+    { "id": "G2", "category": "governance", "question": "Are independent directors adequately represented?", "weight": 10, "expected_evidence": "Board composition" },
+    { "id": "G3", "category": "governance", "question": "Are ESG risks integrated into enterprise risk management?", "weight": 5, "expected_evidence": "Risk management section" },
+    { "id": "G4", "category": "governance", "question": "Are executive incentives linked to ESG performance?", "weight": 5, "expected_evidence": "Remuneration report" }
+  ]
+}

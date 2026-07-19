@@ -1,0 +1,20 @@
+{
+  "company": {
+    "name": "ABC Green Infrastructure Ltd.",
+    "industry": "Construction",
+    "country": "India",
+    "reporting_year": 2025
+  },
+  "documents": [
+    {
+      "id": "doc_001",
+      "type": "sustainability_report",
+      "filename": "sustainability_report_2025.pdf"
+    },
+    {
+      "id": "doc_002",
+      "type": "annual_report",
+      "filename": "annual_report_2025.pdf"
+    }
+  ]
+}

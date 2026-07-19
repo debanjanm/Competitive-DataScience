@@ -1,0 +1,30 @@
+{
+  "company": "ABC Green Infrastructure Ltd.",
+  "facts": [
+    {
+      "id": "fact_001",
+      "category": "Environmental",
+      "topic": "Climate Strategy",
+      "evidence": "Company targets Net Zero emissions by 2045.",
+      "document": "Sustainability Report",
+      "page": 18,
+      "confidence": 0.99,
+      "keywords": [
+        "Net Zero",
+        "Climate Strategy"
+      ]
+    },
+    {
+      "id": "fact_002",
+      "category": "Governance",
+      "topic": "Board Independence",
+      "evidence": "6 of 9 directors are independent.",
+      "document": "Annual Report",
+      "page": 81,
+      "confidence": 0.98,
+      "keywords": [
+        "Independent Director"
+      ]
+    }
+  ]
+}

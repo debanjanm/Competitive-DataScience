@@ -1,0 +1,20 @@
+{
+  "ABC Green Infrastructure Ltd.": {
+    "industry": "Construction",
+    "country": "India",
+    "reporting_year": 2025,
+    "documents": [
+      { "type": "sustainability_report", "filename": "ABC_Green_Infrastructure_Sustainability_Report_2025.docx" },
+      { "type": "annual_report", "filename": "ABC_Green_Infrastructure_Annual_Report_2025.docx" }
+    ]
+  },
+  "XYZ Urban Developers Ltd.": {
+    "industry": "Construction",
+    "country": "India",
+    "reporting_year": 2025,
+    "documents": [
+      { "type": "sustainability_report", "filename": "XYZ_Urban_Developers_Sustainability_Report_2025.docx" },
+      { "type": "annual_report", "filename": "XYZ_Urban_Developers_Annual_Report_2025.docx" }
+    ]
+  }
+}
