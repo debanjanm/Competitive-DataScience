@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GreenGate — Screening Result UI Mockup</title>
+<style>*{margin:0}body{margin:0}</style>
+</head>
+<body>
+<style>
+  :root {
+    --ground: #F6F8F7;
+    --surface: #FFFFFF;
+    --surface-2: #EFF3F1;
+    --ink: #131C18;
+    --ink-soft: #3C4B45;
+    --muted: #64756E;
+    --line: #DCE5E1;
+    --line-strong: #C3D0CA;
+    --accent: #0B5F63;
+    --accent-soft: #E2EFEE;
+    --eligible: #2F7A4A;
+    --conditional: #A8730F;
+    --review: #B4531B;
+    --noteligible: #9E2B2B;
+    --shadow: 0 1px 2px rgba(19,28,24,.06), 0 8px 24px -12px rgba(19,28,24,.18);
+
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E1512;
+      --surface: #161F1B;
+      --surface-2: #1C2621;
+      --ink: #E8EFEB;
+      --ink-soft: #BCC9C3;
+      --muted: #8B9C95;
+      --line: #24322C;
+      --line-strong: #33443C;
+      --accent: #5FBDB4;
+      --accent-soft: #14302E;
+      --eligible: #64C088;
+      --conditional: #DCA43D;
+      --review: #E08347;
+      --noteligible: #E0716C;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0E1512;
+    --surface: #161F1B;
+    --surface-2: #1C2621;
+    --ink: #E8EFEB;
+    --ink-soft: #BCC9C3;
+    --muted: #8B9C95;
+    --line: #24322C;
+    --line-strong: #33443C;
+    --accent: #5FBDB4;
+    --accent-soft: #14302E;
+    --eligible: #64C088;
+    --conditional: #DCA43D;
+    --review: #E08347;
+    --noteligible: #E0716C;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  :root[data-theme="light"] {
+    --ground: #F6F8F7;
+    --surface: #FFFFFF;
+    --surface-2: #EFF3F1;
+    --ink: #131C18;
+    --ink-soft: #3C4B45;
+    --muted: #64756E;
+    --line: #DCE5E1;
+    --line-strong: #C3D0CA;
+    --accent: #0B5F63;
+    --accent-soft: #E2EFEE;
+    --eligible: #2F7A4A;
+    --conditional: #A8730F;
+    --review: #B4531B;
+    --noteligible: #9E2B2B;
+    --shadow: 0 1px 2px rgba(19,28,24,.06), 0 8px 24px -12px rgba(19,28,24,.18);
+  }
+
+  * { box-sizing: border-box; }
+
+  .gg {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 28px 20px 64px;
+  }
+
+  .gg-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
+  }
+  .brand {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+  .brand span { color: var(--accent); }
+  .masthead p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 46ch;
+  }
+  .mock-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+    padding: 3px 7px;
+  }
+
+  /* ---------- comparison strip ---------- */
+  .strip-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 -8px;
+  }
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 760px) {
+    .strip { grid-template-columns: repeat(2, 1fr); }
+  }
+  .co {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 13px 13px 12px 16px;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    transition: border-color .15s, transform .15s;
+  }
+  .co::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--band);
+    border-radius: 3px 0 0 3px;
+  }
+  .co:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+  .co[aria-selected="true"] {
+    border-color: var(--band);
+    box-shadow: var(--shadow);
+  }
+  .co:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .co-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .co-score {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--band);
+    font-weight: 600;
+  }
+  .co-band {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  /* ---------- result card ---------- */
+  .result {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--band);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .result-head {
+    padding: 20px 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .id-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .co-title {
+    font-family: var(--serif);
+    font-size: 25px;
+    letter-spacing: -.015em;
+    margin: 0 0 3px;
+    text-wrap: balance;
+  }
+  .co-meta {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--band-wash);
+    color: var(--band);
+    border: 1px solid var(--band);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill i {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    display: block;
+  }
+
+  /* ---------- metrics ---------- */
+  .metrics {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 26px;
+    align-items: center;
+    padding: 16px 0 4px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 700px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .bars { grid-column: 1 / -1; }
+  }
+  .tile-k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .tile-v {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 600;
+  }
+  .tile-v.band { color: var(--band); }
+  .tile-v small { font-size: 15px; color: var(--muted); font-weight: 400; }
+
+  .bars { display: flex; flex-direction: column; gap: 7px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 92px 1fr 38px;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .bar-row span:first-child { color: var(--ink-soft); }
+  .track {
+    height: 7px;
+    background: var(--surface-2);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 100px;
+  }
+  .bar-val {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- lede ---------- */
+  .lede {
+    margin: 0;
+    padding: 16px 24px 20px;
+    border-top: 1px solid var(--line);
+    background: var(--surface-2);
+    font-size: 15.5px;
+    line-height: 1.62;
+    color: var(--ink-soft);
+    max-width: 78ch;
+  }
+  .lede b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  /* ---------- tabs ---------- */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 0 16px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    overflow-x: auto;
+  }
+  .tab {
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 13.5px;
+    padding: 13px 14px 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom-color: var(--accent);
+  }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+  .tab u {
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    background: var(--surface-2);
+    border-radius: 100px;
+    padding: 1px 6px;
+    color: var(--muted);
+  }
+
+  .panel { padding: 22px 24px 26px; }
+  .panel[hidden] { display: none; }
+
+  h3.sec {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stack { display: flex; flex-direction: column; gap: 24px; }
+
+  ul.pts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  ul.pts li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    max-width: 82ch;
+    color: var(--ink-soft);
+  }
+  ul.pts li::before {
+    content: "";
+    position: absolute;
+    left: 4px; top: 8px;
+    width: 6px; height: 6px;
+    border-radius: 1px;
+    background: var(--mark, var(--muted));
+  }
+  ul.strong li::before { background: var(--eligible); }
+  ul.gap li::before { background: var(--review); }
+  ul.act { counter-reset: a; }
+  ul.act li { padding-left: 26px; }
+  ul.act li::before {
+    counter-increment: a;
+    content: counter(a);
+    background: none;
+    top: 0; left: 0;
+    width: 18px; height: 18px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--accent);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+  }
+
+  .qid {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 2px;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+
+  /* ---------- financing ---------- */
+  .instrument {
+    background: var(--accent-soft);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .instrument strong {
+    font-family: var(--serif);
+    font-size: 19px;
+    letter-spacing: -.01em;
+  }
+  .instrument p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 80ch; }
+
+  /* ---------- evidence table ---------- */
+  .tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; min-width: 660px; font-size: 13.5px; }
+  thead th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 9px 14px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--surface-2); }
+  td.qc { font-family: var(--mono); font-size: 12px; color: var(--accent); white-space: nowrap; }
+  td.wc { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; color: var(--muted); }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .status i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+  .s-full { color: var(--eligible); }
+  .s-part { color: var(--conditional); }
+  .s-none { color: var(--noteligible); }
+  .quote {
+    display: block;
+    margin-top: 6px;
+    padding-left: 10px;
+    border-left: 2px solid var(--line-strong);
+    font-size: 12.5px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .quote em { font-style: normal; font-family: var(--mono); font-size: 11px; }
+
+  .foot {
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    max-width: 76ch;
+  }
+  .foot code {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    background: var(--surface-2);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="gg">
+<div class="gg-inner">
+
+  <header class="masthead">
+    <div>
+      <h1 class="brand">Green<span>Gate</span></h1>
+      <p>Green &amp; transition finance eligibility screening — assessment result view.</p>
+    </div>
+    <span class="mock-tag">Design mockup</span>
+  </header>
+
+  <p class="strip-label">Screened this session</p>
+  <div class="strip" role="tablist" aria-label="Screened companies" id="strip"></div>
+
+  <section class="result" id="result"></section>
+
+  <p class="foot">
+    Mockup of the proposed result layout: comparison strip replaces the single-company modal,
+    executive summary sits above the tabs rather than inside one, and
+    <code>green_finance_recommendation</code> renders as four parts instead of one paragraph.
+    Scores and narrative are taken from real pipeline runs against the mock company documents.
+  </p>
+
+</div>
+</div>
+
+<script>
+(function () {
+  var BANDS = {
+    eligible:    { label: "Eligible for Green Finance", color: "var(--eligible)",    wash: "color-mix(in srgb, var(--eligible) 10%, transparent)" },
+    conditional: { label: "Conditionally Eligible",     color: "var(--conditional)", wash: "color-mix(in srgb, var(--conditional) 10%, transparent)" },
+    review:      { label: "Further Review Required",    color: "var(--review)",      wash: "color-mix(in srgb, var(--review) 10%, transparent)" },
+    none:        { label: "Not Eligible",               color: "var(--noteligible)", wash: "color-mix(in srgb, var(--noteligible) 10%, transparent)" }
+  };
+
+  var DATA = [
+    {
+      id: "abc",
+      name: "ABC Green Infrastructure Ltd.",
+      industry: "Infrastructure Development",
+      country: "India",
+      year: 2025,
+      band: "conditional",
+      overall: 77.5,
+      disclosure: 100,
+      cats: { Environmental: 60.0, Social: 87.5, Governance: 100.0 },
+      summary: "A relatively mature ESG framework, with robust governance, strong safety and diversity practices, and a well-articulated climate strategy aligned to leading standards (E1, E2, S1, S3, G1–G4). Environmental disclosure is more developed on transition planning and adaptation than on nature-related impacts and physical risk quantification, and community-related disclosure remains fragmented (E3, E4, S2).",
+      rationale: "Sits in this band because strong governance, climate strategy, and safety performance lifted it clear of a baseline profile, with Board oversight and incentive alignment on ESG topics (E1, E2, G1–G4, S1, S3). It does not reach the band above because nature-related risk management is still at an early stage, quantified physical risk analysis is incomplete, and community engagement reporting is fragmented (E3, E4, S2).",
+      strengths: [
+        "Climate strategy aligned with TCFD and IFRS S2, covering governance, strategy, risk management, and metrics and targets (E1).",
+        "Net Zero by 2045 commitment with an interim Scope 1 and 2 emissions intensity reduction target of 40% by 2032 (E2).",
+        "Mandatory flood-resilient design standards, with critical assets elevated above projected flood levels (E5).",
+        "Published worker safety metrics including LTIFR and contractor training completion rates (S1).",
+        "Transparent diversity reporting, including gender ratios across management bands (S3).",
+        "Board-level ESG Committee chaired by an independent director, reviewing climate strategy quarterly (G1).",
+        "Two-thirds independent board, with 6 of 9 directors independent (G2).",
+        "Climate transition and physical risk formally integrated into enterprise risk management, with annual scenario analysis (G3).",
+        "Executive long-term incentives explicitly linked to ESG KPIs at a defined 15% weighting (G4)."
+      ],
+      gaps: [
+        "No completed TNFD-aligned LEAP assessment of nature-related impacts and dependencies; currently planned for a future reporting year (E3).",
+        "No published site-by-site quantified hazard assessment covering heat stress and cyclone exposure (E4).",
+        "Community engagement disclosed only partially — site-level liaison officers are named, but no consolidated engagement or CSR report is published (S2)."
+      ],
+      actions: [
+        "Complete and disclose a TNFD-aligned LEAP assessment, integrating findings into risk management and project planning (E3).",
+        "Publish a quantified, site-by-site physical climate risk assessment covering flooding, heat stress and cyclone exposure, linked to capital planning (E4).",
+        "Produce an annual consolidated community engagement report covering grievance mechanisms, CSR investment and outcome metrics (S2).",
+        "Translate the 2045 and 2032 targets into an asset-level decarbonisation roadmap with capex requirements and milestones (E2).",
+        "Disclose adaptation KPIs such as share of assets meeting flood-resilient design standards, tracked annually (E5, G1)."
+      ],
+      fin: {
+        instrument: "Sustainability-linked loan",
+        rationale: "A sustainability-linked structure leverages existing climate and safety governance while directly incentivising better management of physical and nature-related risk. It avoids use-of-proceeds constraints that are impractical for a developer with diversified capital needs, while still embedding ESG performance into pricing.",
+        conditions: [
+          "Board-approved ESG KPI framework as condition precedent, including baselines, annual targets and calculation methodology, externally verified.",
+          "Covenant to complete and publicly disclose a TNFD-aligned LEAP assessment within an agreed period of the tenor (E3).",
+          "Covenant to disclose a quantified physical climate hazard assessment covering heat stress and cyclone exposure, and how findings feed capex planning (E4).",
+          "Covenant to publish an annual consolidated community engagement and CSR report across major sites (S2).",
+          "Annual external assurance over the KPIs driving margin adjustment."
+        ],
+        kpis: [
+          "Year-on-year Scope 1 and 2 emissions intensity against the interim decarbonisation trajectory (E2).",
+          "Completion and publication status of the TNFD-aligned LEAP assessment (E3).",
+          "Share of high-risk assets with quantified hazard assessment and adaptation measures implemented (E4, E5).",
+          "LTIFR and safety training completion for employees and contractors (S1).",
+          "Community grievances recorded and resolved within defined timeframes (S2)."
+        ]
+      },
+      qs: [
+        ["E1", "Climate strategy aligned with recognised frameworks", 15, "full", "Strategy explicitly aligned to TCFD and IFRS S2, reviewed quarterly by the ESG Committee.", "The company has published a climate strategy fully aligned with the TCFD recommendations and IFRS S2 disclosure requirements.", "Sustainability Report 2025"],
+        ["E2", "Net Zero or emissions reduction target", 10, "full", "Long-term and interim targets both disclosed.", "Net Zero by 2045 commitment, with an interim target of a 40% reduction in Scope 1 and Scope 2 emissions intensity by 2032.", "Sustainability Report 2025"],
+        ["E3", "Biodiversity impact / dependency assessment", 10, "part", "Policy and no-net-loss commitment exist, but no completed LEAP assessment.", "A formal TNFD-aligned LEAP impact and dependency assessment has not yet been completed; it is targeted for FY2026.", "Sustainability Report 2025"],
+        ["E4", "Physical climate risks disclosed", 10, "part", "Flood exposure addressed; heat and cyclone hazards not quantified.", "A comprehensive, site-by-site quantified hazard assessment covering heat stress and cyclone exposure has not yet been published.", "Sustainability Report 2025"],
+        ["E5", "Climate adaptation measures", 5, "full", "Specific, mandatory engineering standards disclosed.", "Critical electrical and mechanical assets are elevated above the 1-in-100-year projected flood level at all sites in designated flood-risk zones.", "Sustainability Report 2025"],
+        ["S1", "Worker health &amp; safety metrics", 10, "full", "Quantified LTIFR and training completion published.", "LTIFR improved by 18% year-on-year to 0.42 per million hours worked; contractor safety training achieved 97% completion.", "Sustainability Report 2025"],
+        ["S2", "Community engagement initiatives", 5, "part", "Liaison officers named, but no consolidated engagement or CSR reporting.", "Site-level community liaison officers are appointed for projects near residential areas, though the company does not yet publish a consolidated community engagement or CSR investment report.", "Sustainability Report 2025"],
+        ["S3", "Employee diversity or inclusion metrics", 5, "full", "Quantified hiring and management-band diversity data published.", "31% of new hires in FY2025 were women, and the company publishes gender diversity ratios across management bands.", "Sustainability Report 2025"],
+        ["G1", "Board oversight of ESG matters", 10, "full", "Dedicated committee, independent chair, quarterly cadence.", "A dedicated ESG Committee, chaired by an independent director, oversees climate, safety and community matters and reports directly to the full Board.", "Sustainability Report 2025"],
+        ["G2", "Independent director representation", 10, "full", "Two-thirds independent majority disclosed.", "The Board comprises 9 directors, including 6 independent directors, representing a two-thirds independent majority.", "Annual Report 2025"],
+        ["G3", "ESG risk integrated into enterprise risk management", 5, "full", "Transition and physical risk in ERM, with annual scenario analysis.", "Scenario analysis under 1.5C and 4C pathways is performed annually and reported to the Risk Committee.", "Annual Report 2025"],
+        ["G4", "Executive incentives linked to ESG performance", 5, "full", "Defined weighting disclosed.", "Executive long-term incentive plans include ESG KPIs covering emissions intensity and safety performance, weighted at 15% of the total scorecard.", "Sustainability Report 2025"]
+      ]
+    },
+
+    {
+      id: "greenbuild",
+      name: "GreenBuild India Pvt. Ltd.",
+      industry: "Real Estate &amp; Commercial Construction",
+      country: "India",
+      year: 2025,
+      band: "conditional",
+      overall: 65.0,
+      disclosure: 80,
+      cats: { Environmental: 70.0, Social: 50.0, Governance: 66.7 },
+      summary: "A developing ESG framework with credible environmental risk work — notably hazard mapping across the active site portfolio — but thinner follow-through into adaptation planning and social disclosure (E4, E5, S2, S3). Governance structures exist at Board level, though accountability mechanisms linking ESG outcomes to management are not yet in place (G1, G4).",
+      rationale: "Sits in this band because a TCFD-aligned framework, a quantified emissions intensity target and completed hazard mapping demonstrate real risk awareness (E1, E2, E4). It does not reach the band above because the identified high-risk sites have no finalised adaptation plan, biodiversity is entirely absent, and neither diversity reporting nor ESG-linked executive incentives exist (E3, E5, S3, G4).",
+      strengths: [
+        "Climate Action Framework aligned with TCFD, covering governance, strategy, risk management and metrics (E1).",
+        "Quantified emissions intensity reduction target of 20% by 2030 against a FY2023 baseline (E2).",
+        "Satellite-based flood and heat-stress hazard mapping completed across all 14 active project sites (E4).",
+        "Worker safety metrics published, including LTIFR and contractor training completion (S1).",
+        "Board-level ESG Committee in place, with climate risk integrated into enterprise risk management (G1, G3)."
+      ],
+      gaps: [
+        "No biodiversity impact or dependency assessment has been conducted (E3).",
+        "Adaptation measures for the three identified high-exposure sites remain under internal review, with no finalised or disclosed plan (E5).",
+        "No long-term Net Zero commitment to anchor the interim intensity target (E2).",
+        "Community outreach described but no CSR investment figures or structured engagement policy published (S2).",
+        "No workforce diversity or inclusion metrics disclosed (S3).",
+        "No link between executive remuneration and ESG performance (G4)."
+      ],
+      actions: [
+        "Publish a site-specific adaptation plan for the three sites identified as moderate-to-high flood exposure, with timelines and capex (E5).",
+        "Commission a biodiversity impact and dependency assessment covering greenfield developments (E3).",
+        "Set and disclose a long-term Net Zero target date to anchor the existing 2030 intensity target (E2).",
+        "Publish workforce diversity metrics and a consolidated CSR investment figure (S2, S3).",
+        "Introduce an ESG component into executive remuneration with a disclosed weighting (G4)."
+      ],
+      fin: {
+        instrument: "Sustainability-linked loan, with adaptation milestones as conditions precedent",
+        rationale: "Hazard mapping is already complete, so the risk picture is known — what is missing is the response. Tying pricing to delivery of the adaptation plan converts existing analysis into managed risk rather than waiting for a fuller disclosure record.",
+        conditions: [
+          "Finalised and disclosed adaptation plan for the three identified high-exposure sites as a condition precedent (E5).",
+          "Covenant to publish a long-term Net Zero target date within 12 months (E2).",
+          "Covenant to commission and disclose a biodiversity assessment covering greenfield sites (E3).",
+          "Information undertaking to publish annual workforce diversity and CSR investment data (S2, S3)."
+        ],
+        kpis: [
+          "Emissions intensity per square metre of built area against the 2030 target trajectory (E2).",
+          "Proportion of high-exposure sites with adaptation measures implemented (E4, E5).",
+          "LTIFR and contractor safety training completion rate (S1).",
+          "Publication status of diversity and CSR disclosures (S2, S3)."
+        ]
+      },
+      qs: [
+        ["E1", "Climate strategy aligned with recognised frameworks", 15, "full", "Climate Action Framework published, aligned to TCFD across all four pillars.", "The company has published a Climate Action Framework aligned with TCFD recommendations, covering governance, strategy, risk management and metrics.", "Sustainability Report 2025"],
+        ["E2", "Net Zero or emissions reduction target", 10, "part", "Interim intensity target set, but no long-term Net Zero date.", "Committed to reducing emissions intensity per square metre by 20% by 2030. A long-term Net Zero target date has not yet been finalised.", "Sustainability Report 2025"],
+        ["E3", "Biodiversity impact / dependency assessment", 10, "none", "No biodiversity assessment of any kind disclosed.", "No biodiversity impact or dependency assessment has been conducted to date.", "Sustainability Report 2025"],
+        ["E4", "Physical climate risks disclosed", 10, "full", "Hazard mapping completed portfolio-wide with results quantified.", "Commissioned satellite-based flood and heat-stress hazard mapping across all 14 active project sites, identifying three sites in moderate-to-high flood exposure zones.", "Sustainability Report 2025"],
+        ["E5", "Climate adaptation measures", 5, "none", "Risks identified but no adaptation plan finalised or disclosed.", "Adaptation measures for identified high-risk sites are under internal review; no site-specific adaptation plan has been finalised or disclosed yet.", "Sustainability Report 2025"],
+        ["S1", "Worker health &amp; safety metrics", 10, "full", "LTIFR and training completion both quantified.", "LTIFR was 0.68 per million hours worked in FY2025. Safety training completion across contractor workforce reached 89%.", "Sustainability Report 2025"],
+        ["S2", "Community engagement initiatives", 5, "part", "Outreach described qualitatively, no CSR figures or formal policy.", "The company runs periodic community outreach programmes near project sites, though a formal CSR investment figure or structured engagement policy has not been published.", "Sustainability Report 2025"],
+        ["S3", "Employee diversity or inclusion metrics", 5, "none", "No diversity data disclosed.", "No workforce diversity or inclusion metrics have been disclosed.", "Sustainability Report 2025"],
+        ["G1", "Board oversight of ESG matters", 10, "full", "ESG Committee provides Board-level oversight.", "An ESG Committee provides Board-level oversight of sustainability matters.", "Sustainability Report 2025"],
+        ["G2", "Independent director representation", 10, "full", "Composition disclosed — 3 of 10 independent.", "The Board consists of 10 directors, of whom 3 are independent directors.", "Annual Report 2025"],
+        ["G3", "ESG risk integrated into enterprise risk management", 5, "full", "Climate risk reviewed within ERM and reported to the Board.", "Climate-related risks are reviewed as part of the enterprise risk management process and reported to the Board Risk Committee annually.", "Annual Report 2025"],
+        ["G4", "Executive incentives linked to ESG performance", 5, "none", "No remuneration linkage disclosed.", "No disclosure found linking executive incentives to ESG performance.", "—"]
+      ]
+    },
+
+    {
+      id: "xyz",
+      name: "XYZ Urban Developers Ltd.",
+      industry: "Residential Real Estate Development",
+      country: "India",
+      year: 2025,
+      band: "review",
+      overall: 50.0,
+      disclosure: 60,
+      cats: { Environmental: 40.0, Social: 50.0, Governance: 66.7 },
+      summary: "Disclosure is largely declaratory: a climate strategy statement and committee structures exist, but the substance behind them — quantified targets, hazard analysis, adaptation programmes — has not been produced (E2, E4, E5). Social reporting is limited to safety, with no community or diversity data at all (S2, S3).",
+      rationale: "Sits in this band rather than lower because framework alignment, safety metrics and committee-level oversight are genuinely in place (E1, S1, G1, G3). It falls short of the band above because environmental commitments remain aspirational — no quantified target, no hazard assessment, no adaptation programme — while coastal expansion is planned without resilience disclosure (E2, E4, E5).",
+      strengths: [
+        "Climate Strategy Statement published and aligned to the TCFD framework (E1).",
+        "Worker safety metrics disclosed, including LTIFR and training completion rates (S1).",
+        "Dedicated Sustainability Committee reporting to the Board on a semi-annual basis (G1).",
+        "Climate risk formally recognised within the enterprise risk management framework (G3)."
+      ],
+      gaps: [
+        "Emissions reduction stated only as an aspiration — no quantified target or Net Zero commitment published (E2).",
+        "No biodiversity-related disclosure of any kind (E3).",
+        "Climate risks monitored informally by project teams, with no quantitative hazard assessment or site-level data published (E4).",
+        "No formal adaptation programme adopted, despite planned expansion into coastal developments (E5).",
+        "No community engagement programme, CSR figures, or workforce diversity data disclosed (S2, S3).",
+        "Board independence described only qualitatively, with no composition figures given (G2)."
+      ],
+      actions: [
+        "Convert the stated emissions aspiration into a quantified, baselined reduction target with a published trajectory (E2).",
+        "Commission a quantitative physical climate hazard assessment, prioritising the planned coastal sites (E4).",
+        "Adopt and disclose a formal adaptation programme before committing capital to coastal development (E5).",
+        "Disclose board composition figures, including the number of independent directors (G2).",
+        "Begin reporting community engagement activity and workforce diversity metrics (S2, S3)."
+      ],
+      fin: {
+        instrument: "Conventional corporate loan with ESG information covenants",
+        rationale: "Framework-level alignment is not yet matched by measurable performance data, so neither use-of-proceeds nor sustainability-linked pricing can be verified. Planned coastal expansion without resilience disclosure is the specific risk that argues against a labelled structure at this stage.",
+        conditions: [
+          "Information undertaking to publish a quantified emissions reduction target with baseline and trajectory (E2).",
+          "Condition precedent for any coastal-site financing: a quantitative physical hazard assessment for the relevant sites (E4, E5).",
+          "Covenant to disclose board composition including independent director count (G2).",
+          "Annual ESG reporting undertaking covering community and workforce metrics (S2, S3)."
+        ],
+        kpis: [
+          "Publication of a quantified emissions target and subsequent performance against it (E2).",
+          "Coverage of quantitative hazard assessment across the site portfolio (E4).",
+          "Adoption status of a formal adaptation programme (E5).",
+          "LTIFR trend and safety training completion rate (S1)."
+        ]
+      },
+      qs: [
+        ["E1", "Climate strategy aligned with recognised frameworks", 15, "full", "Strategy statement published and aligned to TCFD.", "The company has published a Climate Strategy Statement aligned with the TCFD framework, covering our approach to emissions monitoring across our development portfolio.", "Sustainability Report 2025"],
+        ["E2", "Net Zero or emissions reduction target", 10, "none", "Aspiration only — no quantified target or Net Zero commitment.", "Expressed an aspiration to reduce emissions over time. A formal, quantified emissions reduction target or Net Zero commitment has not yet been finalised or published.", "Sustainability Report 2025"],
+        ["E3", "Biodiversity impact / dependency assessment", 10, "none", "No biodiversity disclosure present.", "No biodiversity-related disclosures are included in this report.", "Sustainability Report 2025"],
+        ["E4", "Physical climate risks disclosed", 10, "none", "Informal monitoring only; no quantitative assessment published.", "Climate-related risks to our sites are monitored on an informal basis by the project management team. No quantitative hazard assessment or site-level risk data has been published.", "Sustainability Report 2025"],
+        ["E5", "Climate adaptation measures", 5, "part", "Measures under consideration, no programme adopted.", "The company is considering resilience measures for future developments, including drainage and site-grading improvements, though no formal adaptation programme has been adopted.", "Sustainability Report 2025"],
+        ["S1", "Worker health &amp; safety metrics", 10, "full", "LTIFR and training completion quantified.", "LTIFR for FY2025 was 1.1 per million hours worked. Contractor safety training completion was 76%.", "Sustainability Report 2025"],
+        ["S2", "Community engagement initiatives", 5, "none", "No community programme or CSR figures disclosed.", "No community engagement programme or CSR investment figures are disclosed in this report.", "Sustainability Report 2025"],
+        ["S3", "Employee diversity or inclusion metrics", 5, "none", "No diversity data published.", "Workforce diversity data has not been published.", "Sustainability Report 2025"],
+        ["G1", "Board oversight of ESG matters", 10, "full", "Dedicated Sustainability Committee reporting to the Board.", "ESG oversight is provided through a dedicated Sustainability Committee that reports to the Board on a semi-annual basis.", "Sustainability Report 2025"],
+        ["G2", "Independent director representation", 10, "none", "Independence referenced but no figures disclosed.", "The Board includes representation from independent directors alongside promoter and executive directors.", "Annual Report 2025"],
+        ["G3", "ESG risk integrated into enterprise risk management", 5, "full", "Climate risk recognised in ERM with annual Risk Committee review.", "Climate risk is formally recognised within the company's enterprise risk management framework, with an annual review presented to the Risk Committee.", "Annual Report 2025"],
+        ["G4", "Executive incentives linked to ESG performance", 5, "none", "No remuneration linkage disclosed.", "No disclosure found linking executive incentives to ESG performance.", "—"]
+      ]
+    },
+
+    {
+      id: "metro",
+      name: "Metro Concrete Works Ltd.",
+      industry: "Building Materials Manufacturing",
+      country: "India",
+      year: 2025,
+      band: "none",
+      overall: 5.0,
+      disclosure: 10,
+      cats: { Environmental: 0.0, Social: 0.0, Governance: 16.7 },
+      summary: "Sustainability reporting is declaratory throughout — commitments are stated without targets, metrics, or assessment behind them. General Board oversight is the only structure evidenced (G1); no environmental or social disclosure meets the assessment threshold.",
+      rationale: "Falls into the lowest band because the complete absence of a disclosed climate strategy, targets, and risk or adaptation framework signals unmanaged environmental risk rather than merely thin reporting (E1–E5). Nothing in the social disclosure clears the threshold either, leaving general Board oversight as the sole evidenced control (G1).",
+      strengths: [
+        "Board has stated responsibility for overseeing sustainability within its general governance responsibilities (G1)."
+      ],
+      gaps: [
+        "No disclosed climate strategy, targets, or adaptation measures, and climate risk is not separately addressed (E1, E2, E4, E5).",
+        "No biodiversity impact or dependency assessment (E3).",
+        "No disclosure on key social metrics, including safety performance, community engagement, and workforce diversity (S1, S2, S3).",
+        "No disclosure on Board independence, ESG risk integration in risk management, or ESG-linked executive remuneration (G2, G3, G4)."
+      ],
+      actions: [
+        "Develop and disclose a basic climate strategy with measurable emissions targets, risk assessment, and priority adaptation measures within 12–24 months (E1, E2, E4, E5).",
+        "Implement and report core social KPIs covering safety rates, training, community engagement activities, and workforce diversity metrics (S1, S2, S3).",
+        "Disclose Board independence, integrate ESG into risk management processes, and introduce a limited ESG-linked component in executive pay (G2, G3, G4)."
+      ],
+      fin: {
+        instrument: "Conventional corporate loan with reinforced reporting covenants",
+        rationale: "There is no disclosure base against which green or sustainability-linked performance could be verified, so a labelled structure cannot be substantiated. Reinforced reporting is the appropriate first step toward building an assessable record.",
+        conditions: [
+          "Adoption and disclosure of a formal climate strategy with measurable targets before any sustainability-linked margin feature is considered (E1, E2).",
+          "Basic ESG risk integration into governance as an information undertaking (G3).",
+          "Tighter reporting covenants and limited tenor pending an improved disclosure record.",
+          "Board independence disclosure at the next reporting cycle (G2)."
+        ],
+        kpis: [
+          "Publication of a climate strategy with quantified emissions targets (E1, E2).",
+          "Commencement of safety performance reporting, including injury frequency rates (S1).",
+          "Disclosure of Board composition and independence (G2).",
+          "Evidence of ESG integration into the enterprise risk framework (G3)."
+        ]
+      },
+      qs: [
+        ["E1", "Climate strategy aligned with recognised frameworks", 15, "none", "Commitment language only, no strategy or framework alignment.", "The company is committed to sustainable practices in its manufacturing operations. No specific framework alignment is disclosed.", "Sustainability Report 2025"],
+        ["E2", "Net Zero or emissions reduction target", 10, "none", "No targets of any kind disclosed.", "No specific emissions targets are included in this report.", "Sustainability Report 2025"],
+        ["E3", "Biodiversity impact / dependency assessment", 10, "none", "No biodiversity content.", "No biodiversity assessment is included in this report.", "Sustainability Report 2025"],
+        ["E4", "Physical climate risks disclosed", 10, "none", "Climate risk not separately addressed anywhere.", "The company manages operational and financial risks as part of its standard business planning process. Climate risk is not separately addressed.", "Annual Report 2025"],
+        ["E5", "Climate adaptation measures", 5, "none", "No adaptation content.", "No physical climate risk or adaptation disclosures are included in this report.", "Sustainability Report 2025"],
+        ["S1", "Worker health &amp; safety metrics", 10, "none", "Priority stated, but no metrics published.", "Safety is treated as a priority across all plant locations. No injury frequency rate or training completion metrics are disclosed.", "Sustainability Report 2025"],
+        ["S2", "Community engagement initiatives", 5, "none", "No community disclosure.", "No community engagement information is disclosed in this report.", "Sustainability Report 2025"],
+        ["S3", "Employee diversity or inclusion metrics", 5, "none", "No diversity disclosure.", "No workforce diversity information is disclosed in this report.", "Sustainability Report 2025"],
+        ["G1", "Board oversight of ESG matters", 10, "part", "General oversight stated, but no dedicated ESG structure or cadence.", "The Board oversees overall company operations, including matters of sustainability, as part of its general governance responsibilities.", "Sustainability Report 2025"],
+        ["G2", "Independent director representation", 10, "none", "Board size given, independence not disclosed.", "The Board consists of 6 directors overseeing company strategy and operations. No breakdown of independent director representation is disclosed.", "Annual Report 2025"],
+        ["G3", "ESG risk integrated into enterprise risk management", 5, "none", "Climate risk explicitly excluded from risk process.", "The company manages operational and financial risks as part of its standard business planning process. Climate risk is not separately addressed.", "Annual Report 2025"],
+        ["G4", "Executive incentives linked to ESG performance", 5, "none", "No remuneration linkage disclosed.", "No disclosure found linking executive incentives to ESG performance.", "—"]
+      ]
+    }
+  ];
+
+  var STATUS = {
+    full: ["Fully Addressed", "s-full"],
+    part: ["Partially Addressed", "s-part"],
+    none: ["Not Disclosed", "s-none"]
+  };
+
+  var strip = document.getElementById("strip");
+  var result = document.getElementById("result");
+  var active = 0;
+  var activeTab = 0;
+
+  function bandVars(el, key) {
+    el.style.setProperty("--band", BANDS[key].color);
+    el.style.setProperty("--band-wash", BANDS[key].wash);
+  }
+
+  function renderStrip() {
+    strip.innerHTML = "";
+    DATA.forEach(function (c, i) {
+      var b = document.createElement("button");
+      b.className = "co";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", i === active ? "true" : "false");
+      bandVars(b, c.band);
+      b.innerHTML =
+        '<span class="co-name">' + c.name + "</span>" +
+        '<span class="co-score">' + c.overall.toFixed(1) + "</span>" +
+        '<span class="co-band">' + BANDS[c.band].label + "</span>";
+      b.addEventListener("click", function () {
+        active = i; activeTab = 0; render();
+      });
+      strip.appendChild(b);
+    });
+  }
+
+  function list(items, cls) {
+    return '<ul class="pts ' + cls + '">' +
+      items.map(function (t) { return "<li>" + cite(t) + "</li>"; }).join("") +
+      "</ul>";
+  }
+
+  function cite(t) {
+    return t.replace(/\(([EGS]\d(?:[^)]*)?)\)/g, function (m, ids) {
+      return '(<span class="qid">' + ids + "</span>)";
+    });
+  }
+
+  function render() {
+    var c = DATA[active];
+    bandVars(result, c.band);
+
+    var bars = Object.keys(c.cats).map(function (k) {
+      var v = c.cats[k];
+      return '<div class="bar-row"><span>' + k + "</span>" +
+        '<span class="track"><span class="fill" style="width:' + v + '%"></span></span>' +
+        '<span class="bar-val">' + v.toFixed(1) + "</span></div>";
+    }).join("");
+
+    var rows = c.qs.map(function (q) {
+      var s = STATUS[q[3]];
+      return "<tr>" +
+        '<td class="qc">' + q[0] + "</td>" +
+        "<td>" + q[1] + "</td>" +
+        '<td><span class="status ' + s[1] + '"><i></i>' + s[0] + "</span></td>" +
+        '<td class="wc">' + q[2] + "</td>" +
+        "<td>" + q[4] +
+          '<span class="quote">“' + q[5] + '” <em>— ' + q[6] + "</em></span>" +
+        "</td>" +
+      "</tr>";
+    }).join("");
+
+    var f = c.fin;
+
+    result.innerHTML =
+      '<div class="result-head">' +
+        '<div class="id-row">' +
+          "<div>" +
+            '<h2 class="co-title">' + c.name + "</h2>" +
+            '<div class="co-meta">' + c.industry + " &middot; " + c.country + " &middot; FY" + c.year +
+              " &middot; 2 documents assessed</div>" +
+          "</div>" +
+          '<span class="pill"><i></i>' + BANDS[c.band].label + "</span>" +
+        "</div>" +
+        '<div class="metrics">' +
+          '<div><div class="tile-k">Overall score</div>' +
+            '<div class="tile-v band">' + c.overall.toFixed(1) + "<small> / 100</small></div></div>" +
+          '<div><div class="tile-k">Disclosure rate</div>' +
+            '<div class="tile-v">' + c.disclosure + "<small>%</small></div></div>" +
+          '<div class="bars">' + bars + "</div>" +
+        "</div>" +
+      "</div>" +
+
+      '<p class="lede"><b>Executive summary</b>' + cite(c.summary) + "</p>" +
+
+      '<div class="tabs" role="tablist" aria-label="Result sections">' +
+        '<button class="tab" role="tab" data-t="0">Assessment <u>' + (c.strengths.length + c.gaps.length + c.actions.length) + "</u></button>" +
+        '<button class="tab" role="tab" data-t="1">Financing view</button>' +
+        '<button class="tab" role="tab" data-t="2">Evidence <u>' + c.qs.length + "</u></button>" +
+      "</div>" +
+
+      '<div class="panel stack" data-p="0">' +
+        "<div><h3 class=\"sec\">Strengths</h3>" + list(c.strengths, "strong") + "</div>" +
+        "<div><h3 class=\"sec\">Disclosure gaps</h3>" + list(c.gaps, "gap") + "</div>" +
+        "<div><h3 class=\"sec\">Recommended actions</h3>" + list(c.actions, "act") + "</div>" +
+      "</div>" +
+
+      '<div class="panel stack" data-p="1">' +
+        '<div><h3 class="sec">Eligibility rationale</h3>' +
+          '<p style="margin:0;max-width:82ch;color:var(--ink-soft);font-size:14.5px">' + cite(c.rationale) + "</p></div>" +
+        '<div><h3 class="sec">Financing recommendation</h3>' +
+          '<div class="instrument"><strong>' + f.instrument + "</strong><p>" + cite(f.rationale) + "</p></div></div>" +
+        "<div><h3 class=\"sec\">Conditions &amp; covenants</h3>" + list(f.conditions, "act") + "</div>" +
+        "<div><h3 class=\"sec\">Monitoring KPIs</h3>" + list(f.kpis, "") + "</div>" +
+      "</div>" +
+
+      '<div class="panel" data-p="2">' +
+        '<h3 class="sec">Question-level assessment &middot; every status traced to source text</h3>' +
+        '<div class="tw"><table><thead><tr>' +
+          "<th>ID</th><th>Question</th><th>Status</th><th>Wt</th><th>Basis &amp; cited evidence</th>" +
+        "</tr></thead><tbody>" + rows + "</tbody></table></div>" +
+      "</div>";
+
+    var tabs = result.querySelectorAll(".tab");
+    var panels = result.querySelectorAll(".panel");
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        activeTab = +t.dataset.t;
+        syncTabs(tabs, panels);
+      });
+    });
+    syncTabs(tabs, panels);
+
+    strip.querySelectorAll(".co").forEach(function (b, i) {
+      b.setAttribute("aria-selected", i === active ? "true" : "false");
+    });
+  }
+
+  function syncTabs(tabs, panels) {
+    tabs.forEach(function (t, i) {
+      t.setAttribute("aria-selected", i === activeTab ? "true" : "false");
+    });
+    panels.forEach(function (p, i) {
+      p.hidden = i !== activeTab;
+    });
+  }
+
+  renderStrip();
+  render();
+})();
+</script>
+
+</body>
+</html>
