@@ -31,7 +31,7 @@ class OpenRouterLLM:
         if not api_key:
             raise ValueError("Missing OPENROUTER_API_KEY. Add it to your environment or .env file.")
 
-        model_name = os.getenv("OPENROUTER_MODEL", "google/gemini-3-flash-preview")
+        model_name = os.getenv("OPENROUTER_MODEL", "openai/gpt-5.1")
         logger.info("Building OpenRouter LLM with model=%s", model_name)
 
         self.model = ChatOpenAI(

@@ -1,6 +1,6 @@
 {
   "ABC Green Infrastructure Ltd.": {
-    "industry": "Construction",
+    "industry": "Infrastructure Development",
     "country": "India",
     "reporting_year": 2025,
     "documents": [
@@ -9,7 +9,7 @@
     ]
   },
   "GreenBuild India Pvt. Ltd.": {
-    "industry": "Construction",
+    "industry": "Real Estate & Commercial Construction",
     "country": "India",
     "reporting_year": 2025,
     "documents": [
@@ -18,7 +18,7 @@
     ]
   },
   "XYZ Urban Developers Ltd.": {
-    "industry": "Construction",
+    "industry": "Residential Real Estate Development",
     "country": "India",
     "reporting_year": 2025,
     "documents": [
@@ -27,7 +27,7 @@
     ]
   },
   "Metro Concrete Works Ltd.": {
-    "industry": "Construction",
+    "industry": "Building Materials Manufacturing",
     "country": "India",
     "reporting_year": 2025,
     "documents": [
