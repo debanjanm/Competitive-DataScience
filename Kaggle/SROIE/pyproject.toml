@@ -1,0 +1,13 @@
+[project]
+name = "sroie-data-preparation"
+version = "0.1.0"
+description = "SROIE2019 OCR box + entity graph data preparation pipeline"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "tqdm>=4.66",
+]
+
+[tool.uv]
+package = false

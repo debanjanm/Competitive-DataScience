@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "greengate-v1",
+      "runtimeExecutable": "/tmp/esgvenv/bin/streamlit",
+      "runtimeArgs": ["run", "SCNXTHack/GreenGate/v1/app.py", "--server.port", "8577", "--server.headless", "true"],
+      "port": 8577
+    }
+  ]
+}
