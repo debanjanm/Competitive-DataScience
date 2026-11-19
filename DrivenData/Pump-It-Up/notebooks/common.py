@@ -85,8 +85,8 @@ def make_flex(version='v2'):
     base = load_version(version).FeaturePipeline
 
     class Flex(base):
-        def __init__(self, geo=True, flags=True, fix_lat=False):
-            self.geo, self.flags, self.fix_lat = geo, flags, fix_lat
+        def __init__(self, geo=True, flags=True, fix_lat=False, k=0):
+            self.geo, self.flags, self.fix_lat, self.k = geo, flags, fix_lat, k   # k>0: add KMeans geo_cluster (v4)
 
         def _run(self, df, fit):
             if self.fix_lat:
@@ -98,6 +98,12 @@ def make_flex(version='v2'):
                 self.flag_cols_ = []
             if self.geo:
                 df = self._impute_geo_numeric(df, fit)
+            if self.k:
+                from sklearn.cluster import KMeans
+                df = df.copy()
+                if fit:
+                    self.kmeans_ = KMeans(n_clusters=self.k, random_state=SEED, n_init=10).fit(df[['latitude', 'longitude']])
+                df['geo_cluster'] = self.kmeans_.predict(df[['latitude', 'longitude']]).astype(str)
             df = self._add_pump_age(df)
             df = self._impute_categorical(df, fit)
             df = self._impute_numeric(df, fit)
