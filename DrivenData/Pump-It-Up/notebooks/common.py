@@ -85,10 +85,31 @@ def make_flex(version='v2'):
     base = load_version(version).FeaturePipeline
 
     class Flex(base):
-        def __init__(self, geo=True, flags=True, fix_lat=False, k=0):
+        def __init__(self, geo=True, flags=True, fix_lat=False, k=0, text=None, drop=(), inter=()):
             self.geo, self.flags, self.fix_lat, self.k = geo, flags, fix_lat, k   # k>0: add KMeans geo_cluster (v4)
+            # text=dict(cols=[...], min=N): lowercase+strip those columns, collapse levels seen < N times
+            # in the training split to 'other' (v5); drop=cols removed outright
+            self.text, self.drop = text, tuple(drop)
+            self.inter = tuple(inter)   # subset of {'qw','pm','pop'}: v6 interaction features
+
+        def _clean_text_flex(self, df, fit):
+            df = df.copy()
+            if fit:
+                self.text_keep_ = {}
+            for col in self.text['cols']:
+                df[col] = df[col].str.lower().str.strip()
+                if self.text.get('min', 0):
+                    if fit:
+                        counts = df[col].value_counts()
+                        self.text_keep_[col] = set(counts[counts >= self.text['min']].index)
+                    df[col] = df[col].where(df[col].isnull() | df[col].isin(self.text_keep_[col]), 'other')
+            return df
 
         def _run(self, df, fit):
+            if self.text:
+                df = self._clean_text_flex(df, fit)
+            if self.drop:
+                df = df.drop(columns=list(self.drop))
             if self.fix_lat:
                 df = df.copy()
                 df['latitude'] = df['latitude'].where(df['latitude'] < -1e-4)
@@ -104,6 +125,8 @@ def make_flex(version='v2'):
                 if fit:
                     self.kmeans_ = KMeans(n_clusters=self.k, random_state=SEED, n_init=10).fit(df[['latitude', 'longitude']])
                 df['geo_cluster'] = self.kmeans_.predict(df[['latitude', 'longitude']]).astype(str)
+            if self.inter:
+                df = self._interactions_flex(df, fit)
             df = self._add_pump_age(df)
             df = self._impute_categorical(df, fit)
             df = self._impute_numeric(df, fit)
@@ -111,6 +134,21 @@ def make_flex(version='v2'):
             if fit:
                 self.feature_cols_ = list(df.columns)
             return df[self.feature_cols_]
+
+        def _interactions_flex(self, df, fit):
+            df = df.copy()
+            cat = {'qw': ('quantity', 'waterpoint_type', 'quantity_x_waterpoint_type'),
+                   'pm': ('payment', 'management', 'payment_x_management')}
+            for key, (a, b, new) in cat.items():
+                if key in self.inter:
+                    df[new] = df[a].astype(str) + '__' + df[b].astype(str)
+            if 'pop' in self.inter:
+                if fit:
+                    self.region_pop_mean_ = df.groupby('region')['population'].mean()
+                    self.global_pop_mean_ = df['population'].mean()
+                df['population_density_ratio'] = (
+                    df['population'] / df['region'].map(self.region_pop_mean_).fillna(self.global_pop_mean_))
+            return df
 
     return Flex
 
